@@ -3,11 +3,14 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofBackground(0);
+    ofLogToConsole();
     ofSetLogLevel(OF_LOG_NOTICE);
     // basic connection:
     client.connect("echo.websocket.org");
+    //client.connect("localhost",9092);
+
     // OR optionally use SSL
-     //client.connect("echo.websocket.org", true);
+    //client.connect("echo.websocket.org", true);
     
     // 1 - get default options
 //    ofxLibwebsockets::ClientOptions options = ofxLibwebsockets::defaultClientOptions();

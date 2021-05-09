@@ -4,8 +4,10 @@ ofPixels sendPixels;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofSetWindowTitle("example_particles_client");
     ofSetFrameRate(60);
-    
+    ofSetLogLevel(OF_LOG_NOTICE);
+    ofLogToConsole();
     // setup client @ port 9093
     client.connect("localhost", 9093);
     client.addListener(this);
@@ -85,15 +87,19 @@ void ofApp::setupGPUParticles(){
     width = ofGetWindowWidth();
     height = ofGetWindowHeight();
     
+    string shadersFolder;
+    if (ofIsGLProgrammableRenderer()) {
+        shadersFolder = "shaders_gl3";
+    }
+    else {
+        shadersFolder = "shaders";
+    }
     // Frag, Vert and Geo shaders for the rendering process of the spark image
-#ifndef TARGET_WIN32
     updateRender.setGeometryInputType(GL_POINTS);
-	updateRender.setGeometryOutputType(GL_TRIANGLE_STRIP);
-	updateRender.setGeometryOutputCount(6);
-    updateRender.load("shaders/render.vert","shaders/render.frag","shaders/render.geom");
-#else
-    updateRender.load("shaders/render.vert","shaders/render.frag");
-#endif
+    updateRender.setGeometryOutputType(GL_TRIANGLE_STRIP);
+    updateRender.setGeometryOutputCount(6);
+    updateRender.load(shadersFolder + "/render.vert", shadersFolder + "/render.frag", shadersFolder + "/render.geom");
+
     
     // Seting the textures where the information ( position and velocity ) will be
     textureRes = (int)sqrt((float)numParticles);
@@ -147,49 +153,4 @@ void ofApp::updateGPUParticles(){
     updateRender.end();
     renderFBO.end();
     ofPopStyle();
-}
-
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){
-    
 }
