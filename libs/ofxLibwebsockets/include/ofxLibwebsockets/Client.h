@@ -76,6 +76,14 @@ namespace ofxLibwebsockets {
             ofAddListener( clientProtocol.onidleEvent, app, &T::onIdle);
             ofAddListener( clientProtocol.onmessageEvent, app, &T::onMessage);
         }
+
+        template<class T>
+        void removeListener(T* app) {
+            ofRemoveListener(clientProtocol.onconnectEvent, app, &T::onConnect);
+            ofRemoveListener(clientProtocol.oncloseEvent, app, &T::onClose);
+            ofRemoveListener(clientProtocol.onidleEvent, app, &T::onIdle);
+            ofRemoveListener(clientProtocol.onmessageEvent, app, &T::onMessage);
+        }
         
         // get pointer to libwebsockets connection wrapper
         Connection * getConnection(){
