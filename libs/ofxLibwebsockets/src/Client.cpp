@@ -35,6 +35,7 @@ namespace ofxLibwebsockets {
     Client::Client(){
         context = NULL;
         connection = NULL;
+        bShouldReconnect = false;
         waitMillis = 1;
         reactors.push_back(this);
         
